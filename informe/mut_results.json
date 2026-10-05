@@ -1,0 +1,331 @@
+{
+ "total": 33,
+ "detected": 33,
+ "rows": [
+  {
+   "name": "φc 0,85→0,90",
+   "file": "js/nucleo/diseno.js",
+   "detected": true,
+   "exercises": [
+    "A08",
+    "A09",
+    "F01",
+    "F03",
+    "N11"
+   ],
+   "rows": 16
+  },
+  {
+   "name": "Lp 1,76→1,70",
+   "file": "js/nucleo/diseno.js",
+   "detected": true,
+   "exercises": [
+    "F02",
+    "F03",
+    "N12"
+   ],
+   "rows": 7
+  },
+  {
+   "name": "interacción 8/9→8/10",
+   "file": "js/nucleo/diseno.js",
+   "detected": true,
+   "exercises": [
+    "F03"
+   ],
+   "rows": 1
+  },
+  {
+   "name": "corte 0,6→0,5 (alma)",
+   "file": "js/nucleo/diseno.js",
+   "detected": true,
+   "exercises": [
+    "F02"
+   ],
+   "rows": 2
+  },
+  {
+   "name": "curva de columna 0,658→0,66",
+   "file": "js/nucleo/diseno.js",
+   "detected": true,
+   "exercises": [
+    "A08",
+    "F01",
+    "N11"
+   ],
+   "rows": 8
+  },
+  {
+   "name": "pandeo débil usa kls",
+   "file": "js/nucleo/diseno.js",
+   "detected": true,
+   "exercises": [
+    "A09",
+    "F01"
+   ],
+   "rows": 5
+  },
+  {
+   "name": "rigidez torsional GJ +5 %",
+   "file": "js/nucleo/solver.js",
+   "detected": true,
+   "exercises": [
+    "A04",
+    "C13"
+   ],
+   "rows": 6
+  },
+  {
+   "name": "carga parcial: ignora el fin b",
+   "file": "js/nucleo/solver.js",
+   "detected": true,
+   "exercises": [
+    "N02"
+   ],
+   "rows": 10
+  },
+  {
+   "name": "trapecio: w2 → w1",
+   "file": "js/nucleo/solver.js",
+   "detected": true,
+   "exercises": [
+    "N03"
+   ],
+   "rows": 7
+  },
+  {
+   "name": "carga puntual: signo",
+   "file": "js/nucleo/solver.js",
+   "detected": true,
+   "exercises": [
+    "N01"
+   ],
+   "rows": 1
+  },
+  {
+   "name": "temperatura uniforme −10 %",
+   "file": "js/nucleo/solver.js",
+   "detected": true,
+   "exercises": [
+    "N04"
+   ],
+   "rows": 2
+  },
+  {
+   "name": "gradiente térmico usa b en lugar de h",
+   "file": "js/nucleo/solver.js",
+   "detected": true,
+   "exercises": [
+    "N04"
+   ],
+   "rows": 4
+  },
+  {
+   "name": "carga uniforme en plano débil: signo",
+   "file": "js/nucleo/solver.js",
+   "detected": true,
+   "exercises": [
+    "C14",
+    "N02"
+   ],
+   "rows": 4
+  },
+  {
+   "name": "carga puntual en plano débil: signo",
+   "file": "js/nucleo/solver.js",
+   "detected": true,
+   "exercises": [
+    "N01"
+   ],
+   "rows": 1
+  },
+  {
+   "name": "momento puntual en plano fuerte: signo",
+   "file": "js/nucleo/solver.js",
+   "detected": true,
+   "exercises": [
+    "N01"
+   ],
+   "rows": 1
+  },
+  {
+   "name": "momento puntual en plano débil: signo",
+   "file": "js/nucleo/solver.js",
+   "detected": true,
+   "exercises": [
+    "N01"
+   ],
+   "rows": 1
+  },
+  {
+   "name": "resorte de giro de apoyo en kN·m mal convertido",
+   "file": "js/nucleo/solver.js",
+   "detected": true,
+   "exercises": [
+    "N05"
+   ],
+   "rows": 3
+  },
+  {
+   "name": "asentamiento de giro en grados",
+   "file": "js/nucleo/solver.js",
+   "detected": true,
+   "exercises": [
+    "N06"
+   ],
+   "rows": 4
+  },
+  {
+   "name": "resorte de unión mal convertido",
+   "file": "js/nucleo/solver.js",
+   "detected": true,
+   "exercises": [
+    "N07"
+   ],
+   "rows": 9
+  },
+  {
+   "name": "área de corte Aws→Aww",
+   "file": "js/nucleo/solver.js",
+   "detected": true,
+   "exercises": [
+    "N08"
+   ],
+   "rows": 2
+  },
+  {
+   "name": "segundo orden sin término P·φ (P-Δ)",
+   "file": "js/nucleo/elemento.js",
+   "detected": true,
+   "exercises": [
+    "N13",
+    "N15",
+    "N16"
+   ],
+   "rows": 5
+  },
+  {
+   "name": "segundo orden: cos con 1 % de error",
+   "file": "js/nucleo/elemento.js",
+   "detected": true,
+   "exercises": [
+    "N13",
+    "N15"
+   ],
+   "rows": 6
+  },
+  {
+   "name": "cortante-P: κ sin factor r",
+   "file": "js/nucleo/elemento.js",
+   "detected": true,
+   "exercises": [
+    "N15"
+   ],
+   "rows": 2
+  },
+  {
+   "name": "Cb: 4·MB → 3·MB",
+   "file": "js/nucleo/diseno.js",
+   "detected": true,
+   "exercises": [
+    "N09"
+   ],
+   "rows": 4
+  },
+  {
+   "name": "Cb: tope 2,3 → 2,6",
+   "file": "js/nucleo/diseno.js",
+   "detected": true,
+   "exercises": [
+    "N09"
+   ],
+   "rows": 1
+  },
+  {
+   "name": "Qs soldadas 0,65 → 0,60",
+   "file": "js/nucleo/diseno.js",
+   "detected": true,
+   "exercises": [
+    "N11"
+   ],
+   "rows": 4
+  },
+  {
+   "name": "λr soldadas compresión 0,64 → 0,60",
+   "file": "js/nucleo/diseno.js",
+   "detected": true,
+   "exercises": [
+    "N11"
+   ],
+   "rows": 1
+  },
+  {
+   "name": "Fr soldadas 114 → 69",
+   "file": "js/nucleo/diseno.js",
+   "detected": true,
+   "exercises": [
+    "N12"
+   ],
+   "rows": 4
+  },
+  {
+   "name": "λr ala soldada 0,95 → 0,83 (flexión)",
+   "file": "js/nucleo/diseno.js",
+   "detected": true,
+   "exercises": [
+    "N12"
+   ],
+   "rows": 2
+  },
+  {
+   "name": "λp ala 0,38 → 0,40",
+   "file": "js/nucleo/diseno.js",
+   "detected": true,
+   "exercises": [
+    "N12"
+   ],
+   "rows": 2
+  },
+  {
+   "name": "alabeo Cw de la PS +10 %",
+   "file": "js/nucleo/perfiles.js",
+   "detected": true,
+   "exercises": [
+    "N10",
+    "N12"
+   ],
+   "rows": 3
+  },
+  {
+   "name": "el caso S no carga los nudos",
+   "file": "js/nucleo/solver.js",
+   "detected": true,
+   "exercises": [
+    "N14"
+   ],
+   "rows": 5
+  },
+  {
+   "name": "signo del axil",
+   "file": "js/nucleo/solver.js",
+   "detected": true,
+   "exercises": [
+    "A01",
+    "A02",
+    "A03",
+    "C08",
+    "C09",
+    "C16",
+    "A05",
+    "A08",
+    "A09",
+    "F01",
+    "F03",
+    "N04",
+    "N13",
+    "N15"
+   ],
+   "rows": 34
+  }
+ ]
+}
