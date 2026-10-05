@@ -1,0 +1,56 @@
+{
+  "proyecto": "atlas-estructuras-3d",
+  "version": "2.1.0",
+  "fecha": "2026-10-05",
+  "archivo_principal": "index.html",
+  "ultima_version_archivada": "versiones/Atlas_Estructuras_3D_v2.html",
+  "verificacion": {
+    "ejercicios": 45,
+    "comprobaciones": 352,
+    "mutaciones_detectadas": "33/33",
+    "test_feat": "42 OK",
+    "test_design": "48 OK",
+    "test_elem": "OK",
+    "xss": "2 casos OK"
+  },
+  "tareas": [
+    {
+      "id": 1,
+      "titulo": "Separar el HTML único en sitio estático (index.html, css, js, libs)",
+      "estado": "hecha"
+    },
+    {
+      "id": 2,
+      "titulo": "Vendorizar SheetJS y fuentes IBM Plex en libs/",
+      "estado": "hecha"
+    },
+    {
+      "id": 3,
+      "titulo": "Mover pruebas, contraste con PyNite e informe a la estructura nueva",
+      "estado": "hecha"
+    },
+    {
+      "id": 7,
+      "titulo": "Corregir escape del nombre de combinación en la pestaña Vista (XSS) y agregar prueba de inyección",
+      "estado": "hecha"
+    },
+    {
+      "id": 4,
+      "titulo": "Subir el repositorio a GitHub y activar Pages",
+      "estado": "pendiente",
+      "detalle": "Lo hace el usuario: ver README, sección «Publicar en GitHub Pages»."
+    },
+    {
+      "id": 5,
+      "titulo": "Cotejar contra el texto del reglamento las constantes cargadas de memoria",
+      "estado": "pendiente",
+      "detalle": "Lista en README, sección «Límites conocidos»."
+    },
+    {
+      "id": 6,
+      "titulo": "Definir licencia del repositorio",
+      "estado": "pendiente",
+      "detalle": "Sin licencia, el código es visible pero no reutilizable por terceros."
+    }
+  ]
+}

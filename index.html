@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Atlas Estructuras 3D</title>
+<link rel="stylesheet" href="libs/fuentes/fuentes.css">
+<link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<div class="app">
+  <div class="toolbar" id="toolbar">
+    <span class="logo">ATLAS<small>3D · v2</small></span>
+    <span class="sep"></span>
+    <span class="lbl">Modo</span>
+    <div class="grp" id="modes">
+      <button class="tb on" data-mode="select" title="Seleccionar y mover (S)">↖ Seleccionar <kbd>S</kbd></button>
+      <button class="tb" data-mode="node" title="Agregar nudo (N)">● Nudo <kbd>N</kbd></button>
+      <button class="tb" data-mode="bar" title="Dibujar barras encadenadas (B)">╱ Barra <kbd>B</kbd></button>
+      <button class="tb" data-mode="orbit" title="Rotar la vista (O · también clic derecho)">⟲ Orbitar <kbd>O</kbd></button>
+      <button class="tb" data-mode="pan" title="Mover la vista (P · también rueda apretada)">✥ Pan <kbd>P</kbd></button>
+    </div>
+    <select class="sel-in" id="tbSec" title="Perfil con el que se dibujan las barras nuevas" aria-label="Perfil de dibujo"></select>
+    <span class="sep"></span>
+    <span class="lbl">Plano</span>
+    <div class="grp" id="planes">
+      <button class="tb on" data-plane="XY" title="Plano horizontal (planta) · Z = valor">XY</button>
+      <button class="tb" data-plane="XZ" title="Plano vertical Este-Oeste · Y = valor">XZ</button>
+      <button class="tb" data-plane="YZ" title="Plano vertical Norte-Sur · X = valor">YZ</button>
+      <input class="num-in" id="planeVal" type="text" inputmode="decimal" value="0" title="Posición del plano de trabajo (mm)" aria-label="Posición del plano de trabajo en mm">
+      <button class="tb" id="planeFromNode" title="Llevar el plano al nudo seleccionado">⇣ nudo</button>
+    </div>
+    <span class="sep"></span>
+    <span class="lbl">Grilla</span>
+    <div class="grp">
+      <select class="sel-in" id="gridStep" title="Paso de grilla y snap" aria-label="Paso de grilla">
+        <option value="10">10 mm</option><option value="50">50 mm</option><option value="100">100 mm</option>
+        <option value="250" selected>250 mm</option><option value="500">500 mm</option><option value="1000">1000 mm</option>
+      </select>
+      <button class="tb on" id="snapBtn" title="Ajuste a grilla y nudos">⌗ Snap</button>
+    </div>
+    <span class="sep"></span>
+    <span class="lbl">Vista</span>
+    <div class="grp" id="views">
+      <button class="tb" data-view="top" title="Planta (1)">Planta</button>
+      <button class="tb" data-view="front" title="Frente, mirando al Norte (2)">Frente</button>
+      <button class="tb" data-view="side" title="Lateral, mirando al Oeste (3)">Lateral</button>
+      <button class="tb on" data-view="iso" title="Isométrica (4)">Iso</button>
+    </div>
+    <span class="sep"></span>
+    <div class="grp">
+      <button class="tb go" id="calcBtn" title="Calcular (Enter)">▶ Calcular</button>
+      <button class="tb" id="undoBtn" title="Deshacer (Ctrl+Z)" disabled>↩</button>
+      <button class="tb" id="redoBtn" title="Rehacer (Ctrl+Y)" disabled>↪</button>
+    </div>
+    <div class="right">
+      <span class="status" id="status">Sin calcular</span>
+      <button class="tb" id="newBtn" title="Modelo nuevo vacío">Nuevo</button>
+      <button class="tb" id="exampleBtn" title="Cargar la plataforma BIO4 de ejemplo">Ejemplo</button>
+      <label class="tb" title="Abrir un modelo .json">Abrir<input type="file" id="openFile" accept=".json,application/json" hidden></label>
+      <button class="tb" id="saveBtn" title="Guardar el modelo como .json">Guardar</button>
+      <button class="tb" id="benchBtn" title="Ejercicios de libros para verificar que el programa calcula bien">Ejercicios</button>
+      <button class="tb" id="xlsBtn" title="Exportar modelo y resultados a Excel">Excel</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <aside class="side">
+      <div class="tabs" role="tablist">
+        <button class="tab on" data-tab="props">Propiedades</button>
+        <button class="tab" data-tab="model">Modelo</button>
+        <button class="tab" data-tab="loads">Cargas</button>
+        <button class="tab" data-tab="vis">Vista</button>
+      </div>
+      <div class="pane" id="pane-props"></div>
+      <div class="pane" id="pane-model" hidden></div>
+      <div class="pane" id="pane-loads" hidden></div>
+      <div class="pane" id="pane-vis" hidden></div>
+    </aside>
+
+    <section class="canvas" id="canvasBox">
+      <svg id="view" xmlns="http://www.w3.org/2000/svg" aria-label="Lienzo de modelado 3D">
+        <defs>
+          <marker id="arrL" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1L7 4L1 7z" fill="var(--load)"></path></marker>
+          <marker id="arrD" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1L7 4L1 7z" fill="var(--muted)"></path></marker>
+          <marker id="arrW" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1L7 4L1 7z" fill="var(--violet)"></path></marker>
+          <filter id="glow"><feGaussianBlur stdDeviation="2.2" result="b"></feGaussianBlur><feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
+        </defs>
+        <g id="gGrid"></g><g id="gModel"></g><g id="gOver"></g><g id="gAxes"></g>
+      </svg>
+      <div class="plane-tag" id="planeTag">Plano XY · Z = 0 mm</div>
+      <div class="legend" id="legend" hidden></div>
+      <div class="readout" id="readout">X — · Y — · Z —</div>
+      <div class="hint" id="hint">Clic en un elemento para seleccionarlo · Shift para sumar · Supr para borrar</div>
+      <div class="zoom">
+        <button class="zb" id="zIn" title="Acercar" aria-label="Acercar">+</button>
+        <button class="zb" id="zFit" title="Ajustar todo (F)" aria-label="Ajustar todo">⊡</button>
+        <button class="zb" id="zOut" title="Alejar" aria-label="Alejar">−</button>
+      </div>
+    </section>
+
+    <section class="res">
+      <div class="tabs" role="tablist">
+        <button class="tab on" data-rtab="sum">Resumen</button>
+        <button class="tab" data-rtab="nodes">Nudos</button>
+        <button class="tab" data-rtab="bars">Barras</button>
+        <button class="tab" data-rtab="reac">Reacciones</button>
+        <button class="tab" data-rtab="defl">Flechas</button>
+        <button class="tab" data-rtab="bom">Cómputo</button>
+        <button class="tab" data-rtab="ver">Verificación</button>
+      </div>
+      <div class="rpane" id="r-sum"></div>
+      <div class="rpane" id="r-nodes" hidden></div>
+      <div class="rpane" id="r-bars" hidden></div>
+      <div class="rpane" id="r-reac" hidden></div>
+      <div class="rpane" id="r-defl" hidden></div>
+      <div class="rpane" id="r-bom" hidden></div>
+      <div class="rpane" id="r-ver" hidden></div>
+    </section>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<div class="dlg" id="benchDlg" hidden><div class="box wide">
+  <div class="bx-head"><h3>Ejercicios de verificación</h3><span id="bxSum"></span><span class="sp"></span><button class="tb" id="bxRerun" title="Volver a correr todos los ejercicios">Recalcular todos</button><button class="tb" id="bxXls" title="Exportar todas las comparaciones a Excel">Excel</button><button class="tb on" id="bxClose">Cerrar</button></div>
+  <div class="bx-body"><div class="bx-list" id="bxList"></div><div class="bx-det" id="bxDet"></div></div>
+</div></div>
+<div class="dlg" id="comboDlg" hidden><div class="box wide">
+  <div class="bx-head"><h3>Combinaciones de carga y generadores</h3><span class="sp"></span><button class="tb on" id="cbClose">Cerrar</button></div>
+  <div class="cb-body" id="cbBody"></div>
+</div></div>
+<div class="dlg" id="dlg" hidden><div class="box"><h3 id="dlgT"></h3><p id="dlgP"></p><div class="row"><button class="tb" id="dlgNo">Cancelar</button><button class="tb on" id="dlgYes">Aceptar</button></div></div></div>
+
+<script src="js/guarda.js"></script>
+<script src="libs/xlsx.full.min.js"></script>
+<script src="js/nucleo/elemento.js"></script>
+<script src="js/nucleo/perfiles.js"></script>
+<script src="js/nucleo/algebra.js"></script>
+<script src="js/nucleo/combinaciones.js"></script>
+<script src="js/nucleo/solver.js"></script>
+<script src="js/nucleo/diseno.js"></script>
+<script src="js/datos/ejemplo.js"></script>
+<script src="js/vista/estado.js"></script>
+<script src="js/vista/historial.js"></script>
+<script src="js/vista/operaciones.js"></script>
+<script src="js/vista/proyeccion.js"></script>
+<script src="js/vista/dibujo.js"></script>
+<script src="js/vista/cargas.js"></script>
+<script src="js/vista/interaccion.js"></script>
+<script src="js/ui/base.js"></script>
+<script src="js/ui/componentes.js"></script>
+<script src="js/ui/propiedades.js"></script>
+<script src="js/ui/edicion.js"></script>
+<script src="js/ui/panel_modelo.js"></script>
+<script src="js/ui/panel_cargas.js"></script>
+<script src="js/ui/panel_combinaciones.js"></script>
+<script src="js/ui/panel_vista.js"></script>
+<script src="js/ui/calculo.js"></script>
+<script src="js/ui/resultados.js"></script>
+<script src="js/ui/archivos.js"></script>
+<script src="js/ui/barra_herramientas.js"></script>
+<script src="js/bench/motor.js"></script>
+<script src="js/bench/ejercicios_1_clasicos.js"></script>
+<script src="js/bench/ejercicios_2_perfiles.js"></script>
+<script src="js/bench/ejercicios_3_funciones_v2.js"></script>
+<script src="js/bench/interfaz.js"></script>
+<script src="js/arranque.js"></script>
+</body>
+</html>

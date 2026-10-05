@@ -1,0 +1,13 @@
+{
+  "name": "atlas-estructuras-3d",
+  "version": "2.1.0",
+  "private": true,
+  "description": "Atlas Estructuras 3D: análisis y verificación de pórticos 3D (CIRSOC 301-2005 / AISC LRFD-99), sitio estático.",
+  "scripts": {
+    "test": "node tests/correr_todo.js",
+    "test:pantalla": "node tests/correr_todo.js --e2e",
+    "informe": "node tests/bench/dump_bench.js informe/bench.json && node tests/bench/mutate_bench.js && python3 informe/build_xlsx.py"
+  },
+  "engines": { "node": ">=18" },
+  "devDependencies": { "playwright": "^1.56.0" }
+}
